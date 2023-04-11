@@ -1,0 +1,123 @@
+.receipt-form {
+  width: 60vw;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid black;
+  font-family: Arial, sans-serif;
+}
+
+.receipt-form h1 {
+  margin-top: 0;
+  font-size: 24px;
+}
+
+.receipt-form .title {
+  display: flex;
+  margin-bottom: 10px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.receipt-form .informations {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.informations .companyInfo {
+  margin-bottom: 25px;
+}
+
+.informations .otherInfo {
+  width: 30%;
+  text-align: left;
+}
+
+.informations li {
+  list-style-type: none;
+  margin-left: 20px;
+}
+
+.receipt-form .row {
+  display: flex;
+  margin-bottom: 10px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.receipt-form .label {
+  font-weight: bold;
+}
+
+.table {
+  margin-top: 20px;
+}
+
+.tableHead {
+  background-color: #ccc;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border: 1px solid rgb(170, 166, 166);
+}
+
+.tableHead th {
+  padding: 8px;
+}
+
+.tableHead .heading1 {
+  width: 40%;
+}
+
+.tableHead .headings {
+  width: 25%;
+}
+
+.tableBody {
+  padding: 20px;
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableBody td {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.tableBody .programRow {
+  width: 40%;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  font-size: 16px;
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"]:focus {
+  outline: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.receipt-form button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  width: auto;
+}
