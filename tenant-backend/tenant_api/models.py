@@ -116,3 +116,20 @@ class Participation(models.Model):
         if not self.slug:
             self.slug = slugify(self.customer + "-" + self.program)
         super().save(*args, **kwargs)
+
+class SurveyEditor(models.Model):
+    slug = models.CharField(max_length=250, unique=True)
+    labelName = models.CharField(max_length=250)
+    labelType = models.CharField(max_length=200)
+    options = models.CharField(max_length=200, null=True)
+    created_at = models.DateTimeField("created_at", auto_now_add=True)
+    updated_at = models.DateTimeField("updated_at", auto_now=True)
+    deleted_at = models.DateTimeField("deleted_at", null=True, blank=True)
+
+    def __str__(self):
+        return self.slug
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.labelName + "-" + self.labelType)
+        super().save(*args, **kwargs)

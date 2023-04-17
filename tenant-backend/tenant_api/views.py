@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Tenant, Subscription, Branch, Program, Participation, Customer
-from .serializers import CreateUserSerializer, UserSerializer, TenantTableSerializer, SubscriptionTableSerializer, BranchTableSerializer, ProgramTableSerializer, CustomerTableSerializer, ParticipationTableSerializer
+from .models import Tenant, Subscription, Branch, Program, Participation, Customer, SurveyEditor
+from .serializers import CreateUserSerializer, UserSerializer, TenantTableSerializer, SubscriptionTableSerializer, BranchTableSerializer, ProgramTableSerializer, CustomerTableSerializer, ParticipationTableSerializer, SurveyEditorTableSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import permissions, viewsets
@@ -330,3 +330,25 @@ class CustomerView(viewsets.ModelViewSet):
 
         serializer = CustomerTableSerializer(user)
         return Response(serializer.data)
+    
+class SurveyEditorView(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny]
+    queryset = SurveyEditor.objects.all().order_by('-created_at')
+    serializer_class = SurveyEditorTableSerializer
+    #all
+    def list(self, request):
+        queryset = SurveyEditor.objects.all().order_by('-created_at')
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = SurveyEditorTableSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = SurveyEditorTableSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+        serializer = SurveyEditorTableSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

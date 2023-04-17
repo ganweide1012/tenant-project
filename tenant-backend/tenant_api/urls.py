@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import LogoutView, RegisterView, LoginView, TenantView, SubscriptionView, TenantIdView, BranchView, ProgramView, ParticipationView, CustomerView
+from .views import LogoutView, RegisterView, LoginView, TenantView, SubscriptionView, TenantIdView, BranchView, ProgramView, ParticipationView, CustomerView, SurveyEditorView
 from rest_framework import routers
 from django.conf.urls.static import static
 from django.conf import settings
@@ -25,6 +25,9 @@ route6.register("", ParticipationView, basename='participationview')
 route7 = routers.DefaultRouter()
 route7.register("", CustomerView, basename='customerview')
 
+route8 = routers.DefaultRouter()
+route8.register("", SurveyEditorView, basename='surveyeditorview')
+
 urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),
@@ -36,6 +39,7 @@ urlpatterns = [
     path('program/', include(route5.urls)),
     path('participation/', include(route6.urls)),
     path('customer/', include(route7.urls)),
+    path('survey/', include(route8.urls)),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

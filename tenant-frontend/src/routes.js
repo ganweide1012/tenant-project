@@ -42,6 +42,8 @@ import Branch from "layouts/branch";
 import Program from "layouts/program";
 import Customer from "layouts/customer";
 import Participation from "layouts/participation";
+import SurveyEditor from "layouts/surveyeditor";
+import Survey from "layouts/survey";
 import SignOut from "layouts/authentication/sign-out";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
@@ -52,6 +54,8 @@ import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import MediationIcon from "@mui/icons-material/Mediation";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import PostAddIcon from "@mui/icons-material/PostAdd";
+import NoteAltIcon from "@mui/icons-material/NoteAlt";
+import ModeIcon from "@mui/icons-material/Mode";
 
 const routes = [
   {
@@ -117,6 +121,30 @@ const routes = [
     ),
     route: "/participation",
     component: <Participation />,
+  },
+  {
+    type: "collapse",
+    name: "Survey Editor",
+    key: "surveyeditor",
+    icon: (
+      <Icon fontSize="small">
+        <ModeIcon />
+      </Icon>
+    ),
+    route: "/surveyeditor",
+    component: <SurveyEditor />,
+  },
+  {
+    type: "collapse",
+    name: "Survey",
+    key: "survey",
+    icon: (
+      <Icon fontSize="small">
+        <NoteAltIcon />
+      </Icon>
+    ),
+    route: "/survey",
+    component: <Survey />,
   },
   {
     type: "collapse",
