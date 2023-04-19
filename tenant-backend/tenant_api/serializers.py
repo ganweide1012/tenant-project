@@ -54,4 +54,4 @@ class ParticipationTableSerializer(serializers.ModelSerializer):
 class SurveyEditorTableSerializer(serializers.ModelSerializer):
     class Meta:
         model = SurveyEditor
-        fields = ['labelName', 'labelType', 'options']
+        fields = ['id', 'labelName', 'labelType', 'options']
