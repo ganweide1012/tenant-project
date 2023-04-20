@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import LogoutView, RegisterView, LoginView, TenantView, SubscriptionView, TenantIdView, BranchView, ProgramView, ParticipationView, CustomerView, SurveyEditorView
+from .views import LogoutView, RegisterView, LoginView, TenantView, SubscriptionView, TenantIdView, BranchView, ProgramView, ParticipationView, CustomerView, SurveyEditorView, UpdateOrderView
 from rest_framework import routers
 from django.conf.urls.static import static
 from django.conf import settings
@@ -40,6 +40,7 @@ urlpatterns = [
     path('participation/', include(route6.urls)),
     path('customer/', include(route7.urls)),
     path('survey/', include(route8.urls)),
+    path('update_order/', UpdateOrderView.as_view(), name="update_order"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -337,7 +337,7 @@ class SurveyEditorView(viewsets.ModelViewSet):
     serializer_class = SurveyEditorTableSerializer
     #all
     def list(self, request):
-        queryset = SurveyEditor.objects.all().order_by('-created_at')
+        queryset = SurveyEditor.objects.all().order_by('updated_at')
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = SurveyEditorTableSerializer(page, many=True)
@@ -352,3 +352,18 @@ class SurveyEditorView(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class UpdateOrderView(APIView):
+    def put(self, request, format=None):
+        item_ids = request.data
+        items = []
+        for item_id in item_ids:
+            try:
+                item = SurveyEditor.objects.get(id=item_id)
+                items.append(item)
+            except SurveyEditor.DoesNotExist:
+                pass
+        for index, item in enumerate(items):
+            item.order = index
+            item.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)

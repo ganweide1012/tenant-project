@@ -92,17 +92,21 @@ export default function Tables() {
     };
   };
 
-  const handleDragEnd = (event) => {
+  const handleDragEnd = async (event) => {
     const { active, over } = event;
-
+    let newDatas;
     if (over) {
       const oldIndex = datas.findIndex((item) => item.id === active.id);
       const newIndex = datas.findIndex((item) => item.id === over.id);
-      const newDatas = arrayMove(datas, oldIndex, newIndex);
-      // console.log("oldIndex", oldIndex);
-      // console.log("newIndex", newIndex);
-      // console.log("newDatas", newDatas);
+      newDatas = arrayMove(datas, oldIndex, newIndex);
       setDatas(newDatas);
+    }
+
+    try {
+      const itemIds = newDatas.map((item) => item.id);
+      await Axios.put("http://127.0.0.1:8000/api/update_order/", itemIds);
+    } catch (error) {
+      console.log(error);
     }
 
     active.data.current.dimensions = null;
