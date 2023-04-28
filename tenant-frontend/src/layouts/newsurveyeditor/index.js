@@ -162,13 +162,13 @@ export default function Tables() {
               ) : null}
               <MDBox mt={2} mb={2} ml={2} mr={2} style={{ display: "flex" }}>
                 <Droppable id={`droppable1-${i}`}>
-                  {isDropped.droppable1 ? <div>Dragged!</div> : "Drop here"}
+                  {isDropped[`droppable1-${i}`] ? <div>Dragged!</div> : "Drop here"}
                 </Droppable>
                 <Droppable id={`droppable2-${i}`}>
-                  {isDropped.droppable2 ? <div>Dragged!</div> : "Drop here"}
+                  {isDropped[`droppable2-${i}`] ? <div>Dragged!</div> : "Drop here"}
                 </Droppable>
                 <Droppable id={`droppable3-${i}`}>
-                  {isDropped.droppable3 ? <div>Dragged!</div> : "Drop here"}
+                  {isDropped[`droppable3-${i}`] ? <div>Dragged!</div> : "Drop here"}
                 </Droppable>
                 {/* End Droppable Area */}
               </MDBox>
