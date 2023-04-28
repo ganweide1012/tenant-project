@@ -44,6 +44,8 @@ import Customer from "layouts/customer";
 import Participation from "layouts/participation";
 import SurveyEditor from "layouts/surveyeditor";
 import Survey from "layouts/survey";
+import NEWSurveyEditor from "layouts/newsurveyeditor";
+import NEWSurvey from "layouts/newsurvey";
 import SignOut from "layouts/authentication/sign-out";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
@@ -145,6 +147,30 @@ const routes = [
     ),
     route: "/survey",
     component: <Survey />,
+  },
+  {
+    type: "collapse",
+    name: "NEWSurvey Editor",
+    key: "newsurveyeditor",
+    icon: (
+      <Icon fontSize="small">
+        <ModeIcon />
+      </Icon>
+    ),
+    route: "/newsurveyeditor",
+    component: <NEWSurveyEditor />,
+  },
+  {
+    type: "collapse",
+    name: "NEWSurvey",
+    key: "newsurvey",
+    icon: (
+      <Icon fontSize="small">
+        <NoteAltIcon />
+      </Icon>
+    ),
+    route: "/newsurvey",
+    component: <NEWSurvey />,
   },
   {
     type: "collapse",
