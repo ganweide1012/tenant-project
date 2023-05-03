@@ -23,7 +23,6 @@ export default function Tables() {
       console.log(error);
     }
   }, []);
-  console.log(datas);
 
   const surveyJson = {
     elements: datas.map((prop) => {
@@ -34,7 +33,6 @@ export default function Tables() {
       if (prop.labelType === "Dropdown") {
         element.choices = prop.options.split(",");
       }
-      console.log(element);
       return element;
     }),
   };

@@ -2,32 +2,25 @@
 import React, { useState, useCallback } from "react";
 import { useDraggable } from "@dnd-kit/core";
 
-export default function Draggable({ id, children, setState }) {
+export default function Draggable({ id, data, children }) {
   const [isDragging, setIsDragging] = useState(false);
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id,
+    data,
   });
 
   const style = transform
     ? {
+        display: "block",
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
         opacity: isDragging ? 0.5 : 1,
         cursor: "pointer",
-        zIndex: isDragging ? 5 : 0,
       }
     : undefined;
 
-  const toggleDrawer = useCallback(() => {
-    setState((prevState) => ({
-      ...prevState,
-      right: false,
-    }));
-  }, []);
-
   const handleMouseDown = useCallback(() => {
     setIsDragging(true);
-    toggleDrawer();
-  }, [toggleDrawer]);
+  }, []);
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
