@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Tenant, Subscription, Branch, Customer, Participation, Program, SurveyEditor
+from .models import Tenant, Subscription, Branch, Customer, Participation, Program, SurveyEditor, Section
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -55,3 +55,8 @@ class SurveyEditorTableSerializer(serializers.ModelSerializer):
     class Meta:
         model = SurveyEditor
         fields = ['id', 'labelName', 'labelType', 'options']
+
+class SectionTableSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Section
+        fields = ['id', 'labelName', 'labelType', 'labelSection']

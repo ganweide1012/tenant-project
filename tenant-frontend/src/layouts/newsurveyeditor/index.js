@@ -74,9 +74,10 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function Tables() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [sectionCount, setSectionCount] = useState(1);
   const [isDropped, setIsDropped] = useState({});
   const [datas, setDatas] = useState([]);
+  const [dropDatas, setDropDatas] = useState([]);
+  const [sectionCount, setSectionCount] = useState(1);
   const [isPut, setIsPut] = useState({});
 
   useEffect(() => {
@@ -88,6 +89,36 @@ export default function Tables() {
       console.log(error);
     }
   }, []);
+
+  useEffect(() => {
+    try {
+      Axios.get("http://localhost:8000/api/section/").then((res) => {
+        setDropDatas(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    const section = Object.keys(isDropped).map((key) => parseInt(key.split("-")[1], 10));
+    const labelSection = section[0];
+
+    const postData = {
+      labelName: isPut.data,
+      labelType: isPut.type,
+      labelSection,
+    };
+
+    console.log("postData", postData);
+    Axios.post("http://localhost:8000/api/section/", postData)
+      .then((response) => {
+        console.log("response", response.data);
+      })
+      .catch((error) => {
+        console.error("error", error.data);
+      });
+  }, [isPut]);
 
   const handleCreateSection = () => {
     setSectionCount(sectionCount + 1);
@@ -106,15 +137,11 @@ export default function Tables() {
     if (over && over.id.startsWith("droppable")) {
       setIsPut(event.active.data.current);
       setIsDropped((prev) => ({
+        [over.id]: event.active.data.current.data,
         ...prev,
-        [over.id]: event.active.data.current,
       }));
     }
   };
-
-  useEffect(() => {
-    console.log(isPut);
-  }, [isPut]);
 
   return (
     <AppBar open={open}>
@@ -165,7 +192,7 @@ export default function Tables() {
               {/* Draggable Components */}
               {datas.map((data) => (
                 <MDBox key={data.id} mt={2} mb={2} ml={2} mr={2} style={{ cursor: "pointer" }}>
-                  <Draggable key={data.id} id={data.id} data={data.labelName}>
+                  <Draggable key={data.id} id={data.id} data={data.labelName} type={data.labelType}>
                     {data.labelName}
                   </Draggable>
                 </MDBox>
@@ -224,29 +251,50 @@ export default function Tables() {
                     </>
                   ) : null}
                   {/* Droppable Component */}
-                  <MDBox mt={2} mb={2} ml={2} mr={2} style={{ display: "flex" }}>
-                    <Droppable id={`droppable1-${i}`}>
-                      {isDropped[`droppable1-${i}`] ? (
-                        <div>{isDropped[`droppable1-${i}`]}</div>
-                      ) : (
-                        "Drop here"
-                      )}
-                    </Droppable>
-                    <Droppable id={`droppable2-${i}`}>
-                      {isDropped[`droppable2-${i}`] ? (
-                        <div>{isDropped[`droppable2-${i}`]}</div>
-                      ) : (
-                        "Drop here"
-                      )}
-                    </Droppable>
-                    <Droppable id={`droppable3-${i}`}>
-                      {isDropped[`droppable3-${i}`] ? (
-                        <div>{isDropped[`droppable3-${i}`]}</div>
-                      ) : (
-                        "Drop here"
-                      )}
-                    </Droppable>
-                  </MDBox>
+                  {/* {i === 0 ? (
+                    <MDBox mt={2} mb={2} ml={2} mr={2} style={{ display: "flex" }}>
+                      <Droppable id={`droppable1-${i}`}>
+                        {isDropped[`droppable1-${i}`] ? (
+                          <div>{isDropped[`droppable1-${i}`]}</div>
+                        ) : (
+                          "Drop here"
+                        )}
+                      </Droppable>
+                      <Droppable id={`droppable2-${i}`}>
+                        {isDropped[`droppable2-${i}`] ? (
+                          <div>{isDropped[`droppable2-${i}`]}</div>
+                        ) : (
+                          "Drop here"
+                        )}
+                      </Droppable>
+                      <Droppable id={`droppable3-${i}`}>
+                        {isDropped[`droppable3-${i}`] ? (
+                          <div>{isDropped[`droppable3-${i}`]}</div>
+                        ) : (
+                          "Drop here"
+                        )}
+                      </Droppable>
+                    </MDBox>
+                  ) : (
+                    <> */}
+                  {dropDatas
+                    .filter((data) => data.labelSection === i)
+                    .map((data) => (
+                      <MDBox mt={2} mb={2} ml={2} mr={2} style={{ display: "flex" }}>
+                        <div>{data.labelName}</div>
+                        <Droppable id={`droppable1-${i}`}>
+                          {isDropped[`droppable1-${i}`] ? <div>{data.labelName}</div> : "Drop here"}
+                        </Droppable>
+                        <Droppable id={`droppable2-${i}`}>
+                          {isDropped[`droppable2-${i}`] ? <div>{data.labelName}</div> : "Drop here"}
+                        </Droppable>
+                        <Droppable id={`droppable3-${i}`}>
+                          {isDropped[`droppable3-${i}`] ? <div>{data.labelName}</div> : "Drop here"}
+                        </Droppable>
+                      </MDBox>
+                    ))}
+                  {/* </>
+                  )} */}
                 </Main>
               </Card>
             ))}

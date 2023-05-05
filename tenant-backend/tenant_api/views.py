@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Tenant, Subscription, Branch, Program, Participation, Customer, SurveyEditor
-from .serializers import CreateUserSerializer, UserSerializer, TenantTableSerializer, SubscriptionTableSerializer, BranchTableSerializer, ProgramTableSerializer, CustomerTableSerializer, ParticipationTableSerializer, SurveyEditorTableSerializer
+from .models import Tenant, Subscription, Branch, Program, Participation, Customer, SurveyEditor, Section
+from .serializers import CreateUserSerializer, UserSerializer, TenantTableSerializer, SubscriptionTableSerializer, BranchTableSerializer, ProgramTableSerializer, CustomerTableSerializer, ParticipationTableSerializer, SurveyEditorTableSerializer, SectionTableSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import permissions, viewsets
@@ -367,3 +367,25 @@ class UpdateOrderView(APIView):
             item.order = index
             item.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class SurveySectionView(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny]
+    queryset = Section.objects.all().order_by('-created_at')
+    serializer_class = SectionTableSerializer
+    #all
+    def list(self, request):
+        queryset = Section.objects.all().order_by('updated_at')
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = SectionTableSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = SectionTableSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+        serializer = SectionTableSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

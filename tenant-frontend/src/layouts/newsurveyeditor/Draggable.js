@@ -2,11 +2,11 @@
 import React, { useState, useCallback } from "react";
 import { useDraggable } from "@dnd-kit/core";
 
-export default function Draggable({ id, data, children }) {
+export default function Draggable({ id, data, children, type }) {
   const [isDragging, setIsDragging] = useState(false);
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id,
-    data,
+    data: { data, type },
   });
 
   const style = transform
