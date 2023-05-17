@@ -2,21 +2,22 @@
 import React from "react";
 import { useDroppable } from "@dnd-kit/core";
 
-export default function Droppable({ children, id }) {
+export default function Droppable({ children, id, hovered }) {
   const { isOver, setNodeRef } = useDroppable({
     id,
   });
 
   const style = {
-    border: isOver ? "2px solid green" : "2px dashed gray",
+    border: isOver || hovered ? "2px solid green" : null,
     height: "50px",
-    width: "50%",
+    width: "auto",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     marginTop: "10px",
-    marginRight: "10px",
+    marginBottom: "10px",
     marginLeft: "10px",
+    marginRight: "10px",
   };
 
   return (
